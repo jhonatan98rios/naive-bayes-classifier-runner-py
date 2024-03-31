@@ -1,19 +1,36 @@
 from typing import Any, Dict
 import pandas as pd
+from src.infra.providers.S3Provider import S3Provider
+from src.infra.repository.MongoDBRepository import MongoDBRepository
 from src.infra.Gateway.NaiveBayesClassifier import NaiveBayesClassifier
 from src.utils.handle import handle
 
-FILE = 'C:\\Users\\Desktop\\Projects\\NLP\\naive-bayes-classifier-microservices\\naive-bayes-classifier-runner-py\\src\\mock\\modelo_naive_bayes.pkl'
-
 class ClassificationService:
-
-    def __init__(self) -> None:
-        pass
+    def __init__(
+            self, classifierRepository: MongoDBRepository, 
+            storageProvider: S3Provider
+        ):
+        self.classifierRepository = classifierRepository
+        self.storageProvider = storageProvider
     
     def execute(self, id: str, sample: Dict[str, Any]):
+
+        # Read One By ID
+        classifier = self.classifierRepository.readOneById(id)
+        if classifier is None:
+            raise Exception(f"Invalid ID: {id}")
         
+        print(classifier['path'])
+        return "Até aqui ok"
+
+        # Get Object from S3
+        file = self.storageProvider.getObject(classifier.path)
+        if file is None:
+            raise Exception(f"Invalid file: {id}")
+
+        # Recover the classifier
+        naiveBayesClassifier = NaiveBayesClassifier(file) 
         df = pd.DataFrame(sample, index=[0])
-        naiveBayesClassifier = NaiveBayesClassifier(FILE) 
 
         try:
             result = naiveBayesClassifier.classify(df)
@@ -21,3 +38,7 @@ class ClassificationService:
         except Exception as err:
             raise err
     
+
+
+# path 111-d601-4d87-8c8b-66e93806092f.model.pkl
+# id 111-d601-4d87-8c8b-66e93806092f
