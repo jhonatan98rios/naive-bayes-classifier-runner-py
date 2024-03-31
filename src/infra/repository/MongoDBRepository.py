@@ -13,6 +13,8 @@ DATABASE_NAME=os.environ['DATABASE_NAME']
 class MongoDBRepository:
     def __init__(self):
         self.connection()
+        self.create_indexes()
+
         
     def connection(self):
         try:
@@ -21,21 +23,24 @@ class MongoDBRepository:
             self.db = self.client["naive-bayes-classifier-database"]
             self.collection = self.db["classifiers"]
 
-        except Exception:
-            raise Exception("Connection Error")
+        except Exception as err:
+            raise Exception(f"Connection Error: {err}")
+        
+    def create_indexes(self):
+        try:
+            # Verificando se o índice 'id' já existe
+            if "id" not in self.collection.index_information():
+                # Criando índice para o campo 'id' com um nome exclusivo
+                self.collection.create_index("id", name="_id")
+        except Exception as e:
+            raise Exception(f"Erro ao criar índice: {e}")
+
 
     def readOneById(self, document_id: str):
         try:
-            document = self.collection.find_one({"id": document_id})
+            document = self.collection.find({"id": document_id})
+            explanation = document.explain()
+            print(explanation)
             return document
-        except Exception:
-            raise Exception(f"Erro ao ler documento por ID: {document_id}")
-
-
-    def readAll(self):
-        try:
-            cursor = self.collection.find()
-            print(cursor)
-            return cursor
-        except Exception:
-            raise Exception("Erro ao ler todos os documentos")
+        except Exception as err:
+            raise Exception(f"Erro ao ler documento por ID: {document_id} \n {err}")
