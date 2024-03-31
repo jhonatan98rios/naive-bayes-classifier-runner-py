@@ -20,14 +20,12 @@ class ClassificationService:
         if classifier is None:
             raise Exception(f"Invalid ID: {id}")
         
-        print(classifier['path'])
-        return "Até aqui ok"
 
         # Get Object from S3
-        file = self.storageProvider.getObject(classifier.path)
+        file = self.storageProvider.getObject(classifier['path'])
         if file is None:
             raise Exception(f"Invalid file: {id}")
-
+        
         # Recover the classifier
         naiveBayesClassifier = NaiveBayesClassifier(file) 
         df = pd.DataFrame(sample, index=[0])

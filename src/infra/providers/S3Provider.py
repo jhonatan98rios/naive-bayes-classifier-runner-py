@@ -1,3 +1,4 @@
+import io
 import boto3
 import os
 
@@ -20,9 +21,8 @@ class S3Provider:
             )
             # Lendo o conteúdo do objeto
             object_content = response['Body'].read()
-            return object_content
+            return  io.BytesIO(object_content)
         
-        except Exception as e:
-            print(f"Erro ao recuperar objeto do S3: {e}")
-            return None
+        except Exception as err:
+            raise Exception(f"Erro ao recuperar objeto do S3: {err}")
 

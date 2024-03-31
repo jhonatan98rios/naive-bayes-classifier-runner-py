@@ -38,9 +38,7 @@ class MongoDBRepository:
 
     def readOneById(self, document_id: str):
         try:
-            document = self.collection.find({"id": document_id})
-            explanation = document.explain()
-            print(explanation)
+            document = self.collection.find_one({"id": document_id})
             return document
         except Exception as err:
             raise Exception(f"Erro ao ler documento por ID: {document_id} \n {err}")
