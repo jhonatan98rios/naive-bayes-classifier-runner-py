@@ -2,6 +2,6 @@
 [x] - Implementar repository MongoDB
 [x] - Ler o classificador pelo id banco
 [x] - Implementar provider S3
-[ ] - Consumir o arquivo baseado no path do classificador
-[ ] - Recuperar o modelo em memoria
-[ ] - Executar a classificação
+[x] - Consumir o arquivo baseado no path do classificador
+[x] - Recuperar o modelo em memoria
+[x] - Executar a classificação

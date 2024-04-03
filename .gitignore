@@ -2,3 +2,6 @@ ENV
 myenv
 .env
 __pycache__
+mock
+scripts/*.csv
+*-train.csv
