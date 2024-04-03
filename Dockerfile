@@ -4,7 +4,7 @@ FROM python:3.9-slim
 # Defina o diretório de trabalho dentro do contêiner
 WORKDIR /app
 
-# Copie o código-fonte para o contêiner
+# Copia os arquivos necessários para o diretório de trabalho na imagem
 COPY . /app
 
 # Instale as dependências
@@ -14,13 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 8000
 
 # Comando para executar o servidor
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
-
-# docker build -t fastapi-app .
-# docker run -d -p 8000:8000 fastapi-app
-
-
-
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 # FROM tiangolo/uvicorn-gunicorn:python3.11-slim
 # COPY ./requirements.txt ./requirements.txt
