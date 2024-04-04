@@ -1,4 +1,5 @@
 import io
+import pickle
 import boto3
 import os
 
@@ -20,8 +21,10 @@ class S3Provider:
                 Key=object_key
             )
             # Lendo o conteúdo do objeto
-            object_content = response['Body'].read()
-            return  io.BytesIO(object_content)
+            body = response['Body'].read()
+            buffer = io.BytesIO(body)
+            buffer.seek(0)
+            return buffer
         
         except Exception as err:
             raise Exception(f"Erro ao recuperar objeto do S3: {err}")

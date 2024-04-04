@@ -3,7 +3,6 @@ import pandas as pd
 from src.infra.providers.S3Provider import S3Provider
 from src.infra.repository.MongoDBRepository import MongoDBRepository
 from src.infra.Gateway.NaiveBayesClassifier import NaiveBayesClassifier
-from src.utils.handle import handle
 
 class ClassificationService:
     def __init__(
@@ -20,7 +19,6 @@ class ClassificationService:
         if classifier is None:
             raise Exception(f"Invalid ID: {id}")
         
-
         # Get Object from S3
         file = self.storageProvider.getObject(classifier['path'])
         if file is None:

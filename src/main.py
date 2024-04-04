@@ -7,7 +7,7 @@ app = FastAPI()
 
 
 # Rota para a classificação
-@app.post("/time-classify")
+@app.post("/num-classify")
 async def classify_text(request: ClassificationRequest):
     return ClassificationController.classify(request)
 

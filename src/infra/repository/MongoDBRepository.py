@@ -3,7 +3,7 @@ from pymongo.server_api import ServerApi
 from dotenv.main import load_dotenv
 import os
 
-from domain.Entity.Classifier import Classifier
+from src.domain.Entity.Classifier import Classifier
 
 load_dotenv()
 

@@ -1,4 +1,4 @@
-import joblib
+import pickle
 import pandas as pd
 
 labels = [
@@ -8,8 +8,8 @@ labels = [
 ]
 
 class NaiveBayesClassifier:
-    def __init__(self, model_file):
-        self.model = joblib.load(model_file)
+    def __init__(self, buffer):
+        self.model = pickle.load(buffer)
 
     def classify(self, df: pd.DataFrame):
             # Realizar a classificação usando o modelo carregado
