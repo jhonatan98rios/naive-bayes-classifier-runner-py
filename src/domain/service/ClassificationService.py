@@ -36,7 +36,3 @@ class ClassificationService:
         except Exception as err:
             raise err
     
-
-
-# path 111-d601-4d87-8c8b-66e93806092f.model.pkl
-# id 111-d601-4d87-8c8b-66e93806092f

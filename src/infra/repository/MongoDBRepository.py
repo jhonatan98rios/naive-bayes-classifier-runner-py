@@ -3,6 +3,8 @@ from pymongo.server_api import ServerApi
 from dotenv.main import load_dotenv
 import os
 
+from domain.Entity.Classifier import Classifier
+
 load_dotenv()
 
 DATABASE_USER=os.environ['DATABASE_USER']
@@ -36,7 +38,7 @@ class MongoDBRepository:
             raise Exception(f"Erro ao criar índice: {e}")
 
 
-    def readOneById(self, document_id: str):
+    def readOneById(self, document_id: str) -> Classifier:
         try:
             document = self.collection.find_one({"id": document_id})
             return document
